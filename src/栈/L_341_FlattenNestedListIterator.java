@@ -1,6 +1,9 @@
 package 栈;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**
  * // This is the interface that allows for creating nested lists.
@@ -20,6 +23,10 @@ import java.util.List;
  * }
  */
 public class L_341_FlattenNestedListIterator {
+
+
+
+
     /*public class NestedIterator implements Iterator<Integer> {
         private List<Integer> numList;
         private int count;
@@ -50,5 +57,50 @@ public class L_341_FlattenNestedListIterator {
             return cur>=count?false:true;
         }
     }*/
+    public static void main(String[] args) {
+        LoadPo loadPo1 = new LoadPo("A",1);
+        LoadPo loadPo2 = new LoadPo("B",2);
+        LoadPo loadPo3 = new LoadPo("C",3);
+        Queue<LoadPo> queue = new PriorityQueue<>(3, new Comparator<LoadPo>() {
+            @Override
+            public int compare(LoadPo o1, LoadPo o2) {
+                return o1.getLoad()<o2.getLoad()?-1:1;
+            }
+        });
+        queue.add(loadPo2);
+        queue.add(loadPo1);
+        queue.add(loadPo3);
+        while(queue.size()>0){
+            System.out.println(queue.poll().getName());
+        }
+    }
 }
 
+class LoadPo{
+    private String name;
+    private double load;
+
+    public LoadPo() {
+    }
+
+    public LoadPo(String name, double load) {
+        this.name = name;
+        this.load = load;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getLoad() {
+        return load;
+    }
+
+    public void setLoad(double load) {
+        this.load = load;
+    }
+}
