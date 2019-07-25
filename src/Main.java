@@ -3,6 +3,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 
 /*
@@ -18,8 +22,12 @@ import java.util.concurrent.Semaphore;
 */
 public class Main {
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws InterruptedException {
+        Lock lock = new ReentrantLock();
+        lock.lock();
+        lock.unlock();
+        Condition condition = lock.newCondition();
+        Lock lock1 = (Lock) new ReentrantReadWriteLock();
     }
 }
 
