@@ -21,7 +21,7 @@ public class 剩余价值背包 {
         list.add("rs");
         //System.out.println(true&&true);
         System.out.println(wordBreak(s,list));;
-    }
+	}
 
     public static boolean wordBreak(String s, List<String> wordDict) {
 
