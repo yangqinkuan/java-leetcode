@@ -1,12 +1,11 @@
 import com.oracle.jrockit.jfr.Producer;
 
 import java.util.*;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Main {
-
-
 
     public static void main(String[] args) {
 
@@ -18,19 +17,7 @@ public class Main {
         for(int i=0;i<n;i++){
             nums[i] = in.nextInt();
         }
-        for(int x=0;x<=n-3;x++){
-            for(int y=x+1;y<=n-2;y++){
-                if(nums[x]+max<nums[y]){
-                    break;
-                }
-                for(int z=y+1;z<=n-1;z++){
-                    if(nums[x]+max<nums[z]){
-                        break;
-                    }
-                    res += 1;
-                }
-            }
-        }
+
         System.out.println(res);
     }
 
@@ -224,14 +211,67 @@ public class Main {
         return  result;
     }
 
-    public static void getS(char[] chararr,int index,Set<String> set,String s){
-        if(index>=chararr.length){
+    public static void getS(char[] chararr,int index,Set<String> set,String s) {
+        if (index >= chararr.length) {
             set.add(s);
             return;
         }
-        for(int i=index;i<chararr.length;i++){
-            s = s+chararr[i];
-            getS(chararr,index+1,set,s);
+        for (int i = index; i < chararr.length; i++) {
+            s = s + chararr[i];
+            getS(chararr, index + 1, set, s);
+        }
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    class Job implements Runnable {
+        private PrintQueue printQueue;
+
+        public Job(PrintQueue printQueue) {
+            this.printQueue = printQueue;
+        }
+
+        @Override
+        public void run() {
+            System.out.printf("%s: Going to print a job\n", Thread.currentThread().getName());
+            printQueue.printJob(new Object());
+            System.out.printf("%s: The document has been printed\n", Thread.currentThread().getName());
+
         }
     }
-}
+
+
+
+    class PrintQueue {
+        private final Semaphore semaphore;
+
+        public PrintQueue() {
+            semaphore = new Semaphore(1);
+        }
+
+        public void printJob(Object document) {
+            try {
+                semaphore.acquire();//获取共享资源，如果计数器为0会等待
+                long duration = (long) (Math.random() * 10);
+                System.out.printf("%s: PrintQueue: Printing a job during %d seconds \n", Thread.currentThread().getName(), duration);
+                Thread.sleep(duration);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                semaphore.release();
+            }
+        }
+    }}
