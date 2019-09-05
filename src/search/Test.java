@@ -69,43 +69,46 @@ public class Test {
     public List<String> search(String search) {
         List<Score> scoreList = new ArrayList<>();
         char[] searchCharArr = search.toCharArray();
+        Map<Character,Boolean> searchExitedMap = new HashMap<>();
+        for (char c: searchCharArr) {
+            searchExitedMap.put(c,true);
+        }
         Arrays.sort(searchCharArr);
+
         for (String key: sortTitleMap.keySet()) {
             List<TitleNode> list = sortTitleMap.get(key);
             short listindex = 0;
             short searchindex = 0;
             short scroe = 0;
-            short searchSameStart = 0;
+
             while (searchindex<searchCharArr.length&&listindex<list.size()){
                 if(searchCharArr[searchindex]<list.get(listindex).getC()){
                     searchindex++;
                 }else if(searchCharArr[searchindex]>list.get(listindex).getC()){
                     listindex++;
                 }else {
-                    searchSameStart = searchindex;
                     break;
                 }
             }
+
             while (searchindex<searchCharArr.length&&listindex<list.size()){
                 TitleNode titleNode = list.get(listindex);
                 if(searchCharArr[searchindex]==titleNode.getC()){
                     scroe += 1;
-                    for(int i=searchSameStart;i<searchCharArr.length;i++){
-                        if(searchCharArr[i]==titleNode.getLast().getC()){
-                            scroe +=1;
-                            break;
-                        }
-                    }
+                    if(searchExitedMap.get(titleNode.getLast().getC())) scroe +=1;
                     searchindex++;
                 }
                 listindex++;
             }
-            if(scroe>0){
-                scoreList.add(new Score(key,scroe));
-            }
+
+            if(scroe>0) scoreList.add(new Score(key,scroe));
+
+
         }
+
         scoreList.sort((o1,o2)->(o2.getScore()-o1.getScore()));
         List<String> res = new ArrayList<>();
+
         for(int i=0;i<scoreList.size();i++){
             res.add(normalTitleMap.get(scoreList.get(i).getUuid()));
         }
