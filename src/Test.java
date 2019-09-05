@@ -1,4 +1,8 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * FileName: Test
@@ -9,20 +13,55 @@ import java.io.*;
 
 public class Test {
     public static void main(String[] args) throws IOException {
-        InputStream s = new BufferedInputStream(new FileInputStream(new File("")));
-        byte[] bb  = new byte[1024];
-        int ch = 0;
-        while ((ch=s.read(bb))!=-1){
-            System.out.println((char)ch);
-        }
-        OutputStream o = new BufferedOutputStream(new FileOutputStream(new File("")));
-        o.write(bb,0,bb.length);
+        BufferedReader bufferedReader = null;
+        BufferedWriter bufferedWriter = null;
+        try {
+            String path = "D:/dict2.txt";
+            bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(path)),"gb2312"));
+            Set<String> set = new HashSet<>();
+            String s;
+            int count = 0;
 
-        String s1 = "你是傻逼";
-        byte[] b1=s1.getBytes();
-        byte[] b2 = addHeadData(b1);
-        String s2= new String(b2);
-        System.out.println(s2);
+            List<String> list = new ArrayList<>();
+            while ((s=bufferedReader.readLine())!=null){
+                //System.out.println(s);
+                list.add(s);
+                //System.out.println(count++);
+                //set.add(s);
+            }
+
+            long start = System.currentTimeMillis();
+            for (String s1:
+            list) {
+                count++;
+                /*if(s1.contains("恒")){
+                    set.add(s1);
+
+                }*/
+            }
+            long end = System.currentTimeMillis();
+
+            System.out.println(end-start);
+            System.out.println("================");
+            System.out.println(count);
+            //System.out.println(set.size());
+          /*  bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(path)),"gb2312"));
+
+            for (String str: set) {
+                bufferedWriter.write(str);
+                bufferedWriter.newLine();
+            }*/
+        }catch (IOException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                bufferedReader.close();
+                //bufferedWriter.close();;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
 
     }
     public static byte[] addHeadData(byte[] data) {
