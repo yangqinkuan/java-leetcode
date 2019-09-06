@@ -28,6 +28,7 @@ public class Test {
 
 
         int count = 0;
+
         int listindex = 0;
         int searchindex = 0;
         long start = System.currentTimeMillis();
@@ -65,50 +66,88 @@ public class Test {
     public static String getSearch(){
         return "";
     }
-
-    public List<String> search(String search) {
+    public List<String> search1(String search){
         List<Score> scoreList = new ArrayList<>();
         char[] searchCharArr = search.toCharArray();
         Map<Character,Boolean> searchExitedMap = new HashMap<>();
-        for (char c: searchCharArr) {
+            for (char c: searchCharArr) {
             searchExitedMap.put(c,true);
         }
-        Arrays.sort(searchCharArr);
+            Arrays.sort(searchCharArr);
 
-        for (String key: sortTitleMap.keySet()) {
+            for (String key: sortTitleMap.keySet()) {
             List<TitleNode> list = sortTitleMap.get(key);
             short listindex = 0;
             short searchindex = 0;
             short scroe = 0;
-
             while (searchindex<searchCharArr.length&&listindex<list.size()){
                 if(searchCharArr[searchindex]<list.get(listindex).getC()){
                     searchindex++;
                 }else if(searchCharArr[searchindex]>list.get(listindex).getC()){
                     listindex++;
                 }else {
+                    TitleNode titleNode = list.get(listindex);
+                    scroe += 1;
+                    if(searchExitedMap.getOrDefault(titleNode.getLast().getC(),false)) scroe +=1;
+                    searchindex++;
+                    listindex++;
+                }
+            }
+            if(scroe>0) scoreList.add(new Score(key,scroe));
+    }
+        scoreList.sort((o1,o2)->(o2.getScore()-o1.getScore()));
+        List<String> res = new ArrayList<>();
+        for(int i=0;i<scoreList.size();i++){
+        res.add(normalTitleMap.get(scoreList.get(i).getUuid()));
+    }
+        return res;
+    }
+
+
+
+
+
+
+    public List<String> search(String search) {
+        List<Score> scoreList = new ArrayList<>();
+        char[] searchCharArr = search.toCharArray();
+        Arrays.sort(searchCharArr);
+        for (String key: sortTitleMap.keySet()) {
+            List<TitleNode> list = sortTitleMap.get(key);
+            short listindex = 0;
+            short searchindex = 0;
+            short scroe = 0;
+            short searchSameStart = 0;
+            while (searchindex<searchCharArr.length&&listindex<list.size()){
+                if(searchCharArr[searchindex]<list.get(listindex).getC()){
+                    searchindex++;
+                }else if(searchCharArr[searchindex]>list.get(listindex).getC()){
+                    listindex++;
+                }else {
+                    searchSameStart = searchindex;
                     break;
                 }
             }
-
             while (searchindex<searchCharArr.length&&listindex<list.size()){
                 TitleNode titleNode = list.get(listindex);
                 if(searchCharArr[searchindex]==titleNode.getC()){
                     scroe += 1;
-                    if(searchExitedMap.get(titleNode.getLast().getC())) scroe +=1;
+                    for(int i=searchSameStart;i<searchCharArr.length;i++){
+                        if(searchCharArr[i]==titleNode.getLast().getC()){
+                            scroe +=1;
+                            break;
+                        }
+                    }
                     searchindex++;
                 }
                 listindex++;
             }
-
-            if(scroe>0) scoreList.add(new Score(key,scroe));
-
-
+            if(scroe>0){
+                scoreList.add(new Score(key,scroe));
+            }
         }
-
         scoreList.sort((o1,o2)->(o2.getScore()-o1.getScore()));
         List<String> res = new ArrayList<>();
-
         for(int i=0;i<scoreList.size();i++){
             res.add(normalTitleMap.get(scoreList.get(i).getUuid()));
         }
