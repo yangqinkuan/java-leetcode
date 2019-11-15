@@ -53,4 +53,25 @@ public class L_78_子集 {
         }
         return queue;
     }
+
+    /**
+     * 顺序过程就是   [1,2,3]   1 12 13 123 2 23 3
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> subsets2(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        backtrack(0, nums, res, new ArrayList<Integer>());
+        return res;
+
+    }
+
+    private void backtrack(int i, int[] nums, List<List<Integer>> res, ArrayList<Integer> tmp) {
+        res.add(new ArrayList<>(tmp));
+        for (int j = i; j < nums.length; j++) {
+            tmp.add(nums[j]);
+            backtrack(j + 1, nums, res, tmp);
+            tmp.remove(tmp.size() - 1);
+        }
+    }
 }
