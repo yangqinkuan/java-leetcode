@@ -5,6 +5,6 @@ package 数组;
 
 public class L_289_生命游戏 {
     public void gameOfLife(int[][] board) {
-        
+
     }
 }
