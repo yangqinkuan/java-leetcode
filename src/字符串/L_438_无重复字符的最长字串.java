@@ -54,4 +54,31 @@ public class L_438_无重复字符的最长字串 {
         }
         return ans;
     }
+    public int lengthOfLongestSubstring3(String s) {
+        if(s==null || s.length()==0) return 0;
+        int max = 1;
+        int left = 0;
+        int right = 1;
+        Map<Character,Integer> existMap = new HashMap<>();
+        existMap.put(s.charAt(left),1);
+
+        while(right<s.length()){
+            char c = s.charAt(right);
+            if(existMap.get(c)==null){
+                existMap.put(s.charAt(right),1);
+                right++;
+            }else{
+                while(existMap.get(c)!=null&&left<right){
+                    existMap.remove(s.charAt(left));
+                    left++;
+                }
+                existMap.put(s.charAt(right),1);
+                right++;
+            }
+
+            max = Math.max(max,existMap.size());
+
+        }
+        return max;
+    }
 }
