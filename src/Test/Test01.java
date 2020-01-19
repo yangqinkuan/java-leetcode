@@ -5,17 +5,29 @@
  * Description:
  */
 
-package Test;
+package test;
 
 import java.util.*;
 
 public class Test01 {
     public static void main(String[] args) {
-        LinkedList<Integer> list = new LinkedList<>();
-
-       Character[] chars = new Character[list.size()];
-       String.valueOf(chars);
-        String s = new String();
-       System.out.println(list.toString());
+        System.out.println(f("(()())(())(()(()))"));
     }
+    public static String f(String s){
+        Stack<Integer> stack = new Stack<>();
+        String rs = "";
+        for(int i=0;i<s.length();i++){
+            char c = s.charAt(i);
+            if(c=='('){
+                stack.push(i);
+            }else {
+                int t = stack.pop();
+                if(stack.empty()){
+                    rs += s.substring(t+1,i);
+                }
+            }
+        }
+        return rs;
+    }
+
 }

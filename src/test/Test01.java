@@ -1,40 +1,33 @@
+/**
+ * FileName: Test01
+ * Author:   yangqinkuan
+ * Date:     2020-1-2 11:35
+ * Description:
+ */
+
 package test;
 
-import 常见手写题.MyHashMap;
-
 import java.util.*;
-import java.util.concurrent.*;
 
 public class Test01 {
-    public static void main(String[] args) throws InterruptedException {
-        LinkedHashMap linkedHashMap = new LinkedHashMap(3,0.75f,true);
-
-        MyHashMap<String,String> myHashMap = new MyHashMap(10);
-        myHashMap.put("杨沁宽","帅哥");
-        myHashMap.put("傻逼","丑逼");
-        System.out.println(myHashMap.get("杨沁宽"));
-        myHashMap.remove("杨沁宽");
-        System.out.println(myHashMap.get("杨沁宽"));
-
-        TreeSet<Integer> set = new TreeSet<>();
-        set.add(2);
-        set.add(3);
-        set.add(4);
-        System.out.println(set.ceiling(1));
+    public static void main(String[] args) {
+        System.out.println(f("(()())(())(()(()))"));
     }
-
-
-}
-class User{
-    String name;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(name, user.name);
+    public static String f(String s){
+        Stack<Integer> stack = new Stack<>();
+        String rs = "";
+        for(int i=0;i<s.length();i++){
+            char c = s.charAt(i);
+            if(c=='('){
+                stack.push(i);
+            }else {
+                int t = stack.pop();
+                if(stack.empty()){
+                    rs += s.substring(t+1,i);
+                }
+            }
+        }
+        return rs;
     }
-
 
 }
