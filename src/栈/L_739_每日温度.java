@@ -8,12 +8,13 @@
 package 栈;
 
 import java.util.Arrays;
+import java.util.Stack;
 
 public class L_739_每日温度 {
 
     public static void main(String[] args) {
         int[] nums = new int[]{73, 74, 75, 71, 69, 72, 76, 73};
-        System.out.println(Arrays.toString(dailyTemperatures(nums)));
+        System.out.println(Arrays.toString(dailyTemperatures1(nums)));
     }
 
     /**
@@ -41,5 +42,28 @@ public class L_739_每日温度 {
             }
         }
         return res;
+    }
+
+    /**
+     * 正解
+     * @param T
+     * @return
+     */
+
+    public static int[] dailyTemperatures1(int[] T) {
+        Stack<Integer> stack = new Stack<>();
+        int[] result = new int[T.length];
+        for(int i=0;i<T.length;i++){
+            while(stack.size()!=0&&T[i]>T[stack.peek()]){
+                int index= stack.pop();
+                result[index] = i-index;
+            }
+            stack.add(i);
+        }
+        while(stack.size()!=0){
+            int index= stack.pop();
+            result[index] = 0;
+        }
+        return result;
     }
 }

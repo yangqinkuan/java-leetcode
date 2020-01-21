@@ -17,6 +17,8 @@ public class L_394_字符串解码 {
     }
 
     public static String decodeString(String s) {
+
+
         Stack<Character> stack = new Stack<>();
         for(int i=0;i<s.length();i++){
             char c = s.charAt(i);
@@ -45,5 +47,35 @@ public class L_394_字符串解码 {
         sb.append(stack.toArray());
         sb.reverse();
         return sb.toString();
+    }
+
+
+
+    public String decodeString1(String s) {
+        Stack<Character> stack = new Stack<>();
+        for(int i=0;i<s.length();i++){
+            char c = s.charAt(i);
+            if(c!=']'){
+                stack.add(c);
+                continue;
+            }
+            List<Character> list = new ArrayList<>();
+            while(stack.peek()!='['){
+                list.add(stack.pop());
+            }
+            stack.pop();
+            int count = stack.pop()-'0';
+            for(int ii=0;ii<count;ii++){
+                for(Character cc:list){
+                    stack.add(cc);
+                }
+            }
+            list.clear();
+        }
+        StringBuffer sb = new StringBuffer();
+        while(stack.size()!=0){
+            sb.append(stack.pop());
+        }
+        return sb.reverse().toString();
     }
 }

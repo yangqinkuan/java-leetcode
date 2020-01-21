@@ -11,7 +11,11 @@ import java.util.*;
 
 public class Test01 {
     public static void main(String[] args) {
-        System.out.println(f("(()())(())(()(()))"));
+        //System.out.println(f("(()())(())(()(()))"));
+        System.out.println();
+        Test01 test01 = new Test01();
+
+
     }
     public static String f(String s){
         Stack<Integer> stack = new Stack<>();
@@ -29,5 +33,8 @@ public class Test01 {
         }
         return rs;
     }
+
+
+
 
 }
