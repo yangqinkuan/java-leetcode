@@ -9,7 +9,11 @@ package Test;
 
 import java.util.*;
 
-public class Test01 {
+public class Test01 extends Father{
+    @Override
+    public void m1(String s,String a){
+
+    }
     public static void main(String[] args) {
         LinkedList<Integer> list = new LinkedList<>();
 
@@ -17,5 +21,14 @@ public class Test01 {
        String.valueOf(chars);
         String s = new String();
        System.out.println(list.toString());
+
+    }
+}
+class Father{
+    public final void m1(String s){
+        System.out.println("你好");
+    }
+    public void m1(String s, String a){
+
     }
 }

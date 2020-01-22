@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.concurrent.Executors;
 
 /**
  * FileName: quicksort
@@ -43,6 +44,7 @@ public class quicksort {
     }
 
     public static void main(String[] args) {
+        Executors.newFixedThreadPool(5);
         int m = 170;
         int n = 160;
         System.out.println(155*1.08);
