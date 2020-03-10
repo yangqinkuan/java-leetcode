@@ -1,6 +1,8 @@
-package test;
-
+package  Test;
 import commom.TreeNode;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class ThreadLocalTest {
 //	static class MyThread extends Thread {
@@ -31,6 +33,9 @@ public static TreeNode buildTree(int[] inorder, int[] postorder) {
 		return node;
 	}
 	public static void main(String[] args) throws InterruptedException {
+
+		
+
 		int[] nums1 = new int[]{9,3,15,20,7};
 		int[] nums2 = new int[]{9,15,7,20,3};
 		buildTree(nums1,nums2);
