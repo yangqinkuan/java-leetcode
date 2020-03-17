@@ -36,6 +36,7 @@ public class L_1071_字符串的最大公因子 {
 
     public static void main(String[] args) {
         L_1071_字符串的最大公因子 test = new L_1071_字符串的最大公因子();
+        
         System.out.println(test.gcd(7,8));
     }
     public String gcdOfStrings(String str1, String str2) {
